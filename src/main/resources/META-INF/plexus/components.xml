@@ -3,11 +3,12 @@
 	<components>
 		<component>
 			<role>org.apache.maven.artifact.handler.ArtifactHandler</role>
-			<role-hint>cust</role-hint>
+			<role-hint>roboconf-app</role-hint>
 			<implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
 			<configuration>
+				<packaging>roboconf-app</packaging>
 				<type>roboconf-app</type>
-				<extension>roboconf-app</extension>
+				<extension>zip</extension>
 				<language>java</language>
 			</configuration>
 		</component>
@@ -19,6 +20,7 @@
 			<configuration>
 				<phases>
 					<process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+					<validate>net.roboconf:roboconf-maven-plugin:validate</validate>
 					<test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
 					<package>net.roboconf:roboconf-maven-plugin:package</package>
 					<install>org.apache.maven.plugins:maven-install-plugin:install</install>

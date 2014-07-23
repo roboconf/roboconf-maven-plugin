@@ -16,7 +16,6 @@
 
 package net.roboconf.maven;
 
-import org.apache.maven.archiver.MavenArchiveConfiguration;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -39,7 +38,7 @@ public class PackageMojo extends AbstractMojo {
 	@Parameter( required = true )
 	private JarArchiver jarArchiver;
 
-	private final MavenArchiveConfiguration archive = new MavenArchiveConfiguration();
+	// private final MavenArchiveConfiguration archive = new MavenArchiveConfiguration();
 
 
 	@Override
