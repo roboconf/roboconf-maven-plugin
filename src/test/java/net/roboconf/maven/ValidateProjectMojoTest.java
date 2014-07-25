@@ -18,9 +18,11 @@ package net.roboconf.maven;
 
 import java.io.File;
 
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
+import org.apache.maven.project.MavenProject;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +30,9 @@ import org.junit.Test;
 /**
  * @author Vincent Zurczak - Linagora
  */
-public class ValidateMojoTest {
+public class ValidateProjectMojoTest {
+
+	private static final String GOAL = "validate-project";
 
 	@Rule
 	public MojoRule rule = new MojoRule();
@@ -39,29 +43,44 @@ public class ValidateMojoTest {
 
 
 	@Test( expected = MojoFailureException.class )
-	public void testInvalidProject() throws Exception {
+	public void testInvalidStructure() throws Exception {
 
-		File baseDir = this.resources.getBasedir( "project--invalid" );
-		Assert.assertNotNull( baseDir );
-		Assert.assertTrue( baseDir.exists());
-		Assert.assertTrue( baseDir.isDirectory());
-
-		this.rule.executeMojo( baseDir, "validate" );
+		findMojo( "project--invalid", GOAL ).execute();;
 	}
 
 
-	@Test( expected = MojoFailureException.class )
-	public void testValidProjectButInvalidApp() throws Exception {
+	@Test
+	public void testValidStructure() throws Exception {
 
-		File baseDir = this.resources.getBasedir( "project--invalid-app" );
+		findMojo( "project--invalid-app", GOAL ).execute();;
+		findMojo( "project--valid-with-warnings", GOAL ).execute();;
+		findMojo( "project--valid", GOAL ).execute();
+	}
+
+
+	protected AbstractMojo findMojo( String projectName, String goalName ) throws Exception {
+
+		// Find the project
+		File baseDir = this.resources.getBasedir( projectName );
 		Assert.assertNotNull( baseDir );
 		Assert.assertTrue( baseDir.exists());
 		Assert.assertTrue( baseDir.isDirectory());
 
-		ValidateMojo mojo = (ValidateMojo) this.rule.lookupConfiguredMojo( baseDir, "validate" );
+		File pom = new File( baseDir, "pom.xml" );
+		AbstractMojo mojo = (AbstractMojo) this.rule.lookupMojo( goalName, pom );
 		Assert.assertNotNull( mojo );
+
+		// Create the Maven project by hand (...)
+		final MavenProject mvnProject = new MavenProject() ;
+        mvnProject.setFile( pom ) ;
+        this.rule.setVariableValueToObject( mojo, "project", mvnProject );
 		Assert.assertNotNull( this.rule.getVariableValueFromObject( mojo, "project" ));
 
-		mojo.execute();
+		// Initialize the project
+		InitializeMojo initMojo = new InitializeMojo();
+		initMojo.setProject( mvnProject );
+		initMojo.execute();
+
+		return mojo;
 	}
 }

@@ -1,0 +1,12 @@
+language: java
+
+# Test several JDK
+jdk:
+  - oraclejdk7
+  - openjdk6
+  - openjdk7
+
+# Build with Maven.
+# Use -q option to only display Maven errors and warnings.
+script:
+  - mvn clean install -q
