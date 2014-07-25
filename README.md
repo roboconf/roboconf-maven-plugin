@@ -7,10 +7,13 @@ This plug-in supports the following goals.
 * **initialize**: configure the project (model directory, build output).
 * **validate-project**: validate the project's structure.
 * **resolve-dependencies**: resolve and import dependencies.
-* **validate-application**: validate the Roboconf application (after dependency resolution and resource filtering).
+* **validate-application**: validate the Roboconf application.
 * **package**: package a Roboconf application as a ZIP file.
 
-Find information about Roboconf on its web site: [roboconf.net](http://roboconf.net).  
+The validation of the application is performed after dependency resolution and resource filtering.
+It means we can insert Maven properties in the application resources.
+
+Find information about Roboconf on [its web site](http://roboconf.net).  
 For later:
 
 * **doc**: generate documentation based on templates and the Roboconf application files.
