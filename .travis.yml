@@ -6,7 +6,18 @@ jdk:
   - openjdk6
   - openjdk7
 
+# The plug-in depends on libraries that come from the platform.
+# So, we must be able to find snapshots of the platform.
+before_script:
+  - wget http://roboconf.net/resources/build/settings.xml
+
 # Build with Maven.
 # Use -q option to only display Maven errors and warnings.
+# Use --settings to force the usage of our "settings.xml" file.
 script:
-  - mvn clean install -q
+  - mvn clean install -q --settings settings.xml
+
+# Actions to perform after the build (only for Java 6).
+after_success:
+  - ./after_success.sh
+  

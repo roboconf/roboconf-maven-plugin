@@ -1,6 +1,9 @@
 # Roboconf's Maven Plug-in
 [![Build Status](http://travis-ci.org/roboconf/roboconf-maven-plugin.png?branch=master)](http://travis-ci.org/roboconf/roboconf-maven-plugin)
 
+Website: [http://roboconf.net](http://roboconf.net)  
+Licensed under the terms of the **Apache License v2**.
+
 A Maven plug-in dedicated to Roboconf projects.  
 This plug-in supports the following goals.
 
