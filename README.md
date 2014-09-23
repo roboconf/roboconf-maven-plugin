@@ -4,8 +4,6 @@
 Website: [http://roboconf.net](http://roboconf.net)  
 Licensed under the terms of the **Apache License v2**.
 
--------------------------------------------------------
-
 A Maven plug-in dedicated to Roboconf projects.  
 This plug-in supports the following goals.
 
