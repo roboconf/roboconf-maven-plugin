@@ -9,7 +9,7 @@
 # The VM
 VM {
 	alias: Virtual Machine;
-	installer: iaas;
+	installer: target;
 	children: MySQL, Tomcat, Apache;
 }
 
