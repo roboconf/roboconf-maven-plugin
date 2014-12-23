@@ -17,7 +17,7 @@ VER=`java -version 2>&1 | sed 's/java version "\(.*\)\.\(.*\)\..*"/\1\2/; 1q'`
 # 4. Enable the profile that generates the javadoc and the sources archives.
 
 if [ $VER == "16" ]; then
-	mvn clean deploy -q --settings settings.xml -P jdoc-and-sources
+	mvn clean cobertura:cobertura coveralls:report deploy -q --settings settings.xml -P jdoc-and-sources
 else
 	echo "No action to undertake (not a JDK 6)."
 fi

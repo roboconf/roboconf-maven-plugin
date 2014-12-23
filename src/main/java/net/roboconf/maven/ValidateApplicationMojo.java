@@ -25,15 +25,14 @@
 
 package net.roboconf.maven;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
+import net.roboconf.core.ErrorCode.ErrorLevel;
 import net.roboconf.core.RoboconfError;
+import net.roboconf.core.model.RuntimeModelIo;
+import net.roboconf.core.model.RuntimeModelIo.ApplicationLoadResult;
 import net.roboconf.core.model.helpers.RoboconfErrorHelpers;
-import net.roboconf.core.model.io.RuntimeModelIo;
-import net.roboconf.core.model.io.RuntimeModelIo.ApplicationLoadResult;
 import net.roboconf.core.utils.Utils;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -94,17 +93,24 @@ public class ValidateApplicationMojo extends AbstractMojo {
 		// Add a log entry
 		getLog().info( "Generating a report for validation errors under " + MavenPluginConstants.VALIDATION_RESULT_PATH );
 
-		// Generate the report
-		StringBuilder sb = new StringBuilder();
+		// Generate the report (file and console too)
+		StringBuilder globalSb = new StringBuilder();
 		for( RoboconfError error : alr.getLoadErrors()) {
+			StringBuilder sb = new StringBuilder();
 			sb.append( "[ " );
-			sb.append( error.getErrorCode().getCategory());
+			sb.append( error.getErrorCode().getCategory().toString().toLowerCase());
 			sb.append( " ] " );
 			sb.append( error.getErrorCode().getMsg());
 			if( ! Utils.isEmptyOrWhitespaces( error.getDetails()))
 				sb.append( " " + error.getDetails());
 
-			sb.append( "\n" );
+			if( error.getErrorCode().getLevel() == ErrorLevel.WARNING )
+				getLog().warn( sb.toString());
+			else if( error.getErrorCode().getLevel() == ErrorLevel.SEVERE )
+				getLog().error( sb.toString());
+
+			globalSb.append( sb );
+			globalSb.append( "\n" );
 		}
 
 		// TODO: add line and source file name
@@ -116,7 +122,6 @@ public class ValidateApplicationMojo extends AbstractMojo {
 				&& ! targetFile.getParentFile().mkdirs())
 			throw new IOException( "A directory could not be created: " + targetFile.getParentFile());
 
-		InputStream in = new ByteArrayInputStream( sb.toString().getBytes( "UTF-8" ));
-		Utils.copyStream( in, targetFile );
+		Utils.writeStringInto( globalSb.toString(), targetFile );
 	}
 }

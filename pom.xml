@@ -139,6 +139,44 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+		
+				<!-- Required for Coveralls! -->
+				<plugin>
+					<groupId>org.eluder.coveralls</groupId>
+					<artifactId>coveralls-maven-plugin</artifactId>
+					<version>3.0.1</version>
+						
+					<configuration>
+						<coverallsFile>target/coveralls.json</coverallsFile>
+						<coverageFile>target/site/cobertura/coverage.xml</coverageFile>
+					</configuration>
+				</plugin>
+				
+				<!-- Required for Coveralls! -->	
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>cobertura-maven-plugin</artifactId>
+					<version>2.6</version>
+								
+					<configuration>
+						<formats>
+							<format>html</format>
+							<format>xml</format>
+						</formats>
+						
+						<instrumentation>
+							<ignoreTrivial>true</ignoreTrivial>
+						</instrumentation>
+						
+						<maxmem>256m</maxmem>
+						<aggregate>true</aggregate>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	
 	<scm>
