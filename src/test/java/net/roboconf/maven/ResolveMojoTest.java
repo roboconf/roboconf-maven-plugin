@@ -25,32 +25,25 @@
 
 package net.roboconf.maven;
 
-import java.io.File;
-
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
+import org.apache.maven.plugin.testing.MojoRule;
+import org.apache.maven.plugin.testing.resources.TestResources;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
- * The mojo in charge of checking the project structure.
  * @author Vincent Zurczak - Linagora
  */
-@Mojo( name="validate-project", defaultPhase = LifecyclePhase.VALIDATE )
-public class ValidateProjectMojo extends AbstractMojo {
+public class ResolveMojoTest {
 
-	@Parameter( defaultValue = "${project}", readonly = true )
-	private MavenProject project;
+	@Rule
+	public TestResources resources = new TestResources();
+
+	@Rule
+	public MojoRule rule = new MojoRule();
 
 
-	@Override
-	public void execute() throws MojoExecutionException, MojoFailureException {
-
-		File appDirectory = new File( this.project.getBasedir(), MavenPluginConstants.SOURCE_MODEL_DIRECTORY );
-		if( ! appDirectory.isDirectory())
-			throw new MojoFailureException( "The " + MavenPluginConstants.SOURCE_MODEL_DIRECTORY + " directory does not exist." );
+	@Test
+	public void testPeanuts() throws Exception {
+		new ResolveMojo().execute();
 	}
 }

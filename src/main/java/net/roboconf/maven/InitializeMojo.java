@@ -55,9 +55,23 @@ public class InitializeMojo extends AbstractMojo {
 		File appDirectory = new File( this.project.getBasedir(), MavenPluginConstants.SOURCE_MODEL_DIRECTORY );
 		if( appDirectory.exists()) {
 			getLog().info( "Adding " + MavenPluginConstants.SOURCE_MODEL_DIRECTORY + " to the list of filtered resources." );
+
+			// Resources that are filtered
 			Resource res = new Resource();
 			res.setDirectory( appDirectory.getAbsolutePath());
 			res.setFiltering( true );
+			res.getIncludes().add( "**/*.graph" );
+			res.getIncludes().add( "**/*.instances" );
+			res.getIncludes().add( "**/*.properties" );
+			this.project.addResource( res );
+
+			// Add another resource set to ONLY copy other kinds of files
+			res = new Resource();
+			res.setDirectory( appDirectory.getAbsolutePath());
+			res.setFiltering( false );
+			res.getExcludes().add( "**/*.graph" );
+			res.getExcludes().add( "**/*.instances" );
+			res.getExcludes().add( "**/*.properties" );
 			this.project.addResource( res );
 		}
 

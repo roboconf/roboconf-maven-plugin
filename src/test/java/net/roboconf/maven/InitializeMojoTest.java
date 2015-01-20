@@ -77,10 +77,14 @@ public class InitializeMojoTest {
 		mojo.execute();
 
 		list = mvnProject.getResources();
-		Assert.assertEquals( 1, list.size());
+		Assert.assertEquals( 2, list.size());
 
 		Resource res = list.get( 0 );
 		Assert.assertTrue( res.isFiltering());
+		Assert.assertEquals( new File( baseDir, MavenPluginConstants.SOURCE_MODEL_DIRECTORY ).getAbsolutePath(), res.getDirectory());
+
+		res = list.get( 1 );
+		Assert.assertFalse( res.isFiltering());
 		Assert.assertEquals( new File( baseDir, MavenPluginConstants.SOURCE_MODEL_DIRECTORY ).getAbsolutePath(), res.getDirectory());
 
 		File expectedFile = new File( mvnProject.getBasedir(), MavenPluginConstants.TARGET_MODEL_DIRECTORY );

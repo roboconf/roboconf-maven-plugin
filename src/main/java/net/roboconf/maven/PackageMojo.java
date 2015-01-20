@@ -26,11 +26,9 @@
 package net.roboconf.maven;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.maven.archiver.MavenArchiveConfiguration;
 import org.apache.maven.archiver.MavenArchiver;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -41,9 +39,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.archiver.Archiver;
-import org.codehaus.plexus.archiver.ArchiverException;
 import org.codehaus.plexus.archiver.jar.JarArchiver;
-import org.codehaus.plexus.archiver.jar.ManifestException;
 
 /**
  * The <strong>package</strong> mojo.
@@ -71,34 +67,25 @@ public class PackageMojo extends AbstractMojo {
 			throw new MojoExecutionException( "The model could not be found. " + modelDir );
 
 		File targetDir = new File( this.project.getBuild().getDirectory());
-	    String archiveName = this.project.getBuild().getFinalName() + ".zip";
-	    File archiveFile = new File( targetDir, archiveName );
+		String archiveName = this.project.getBuild().getFinalName() + ".zip";
+		File archiveFile = new File( targetDir, archiveName );
 
-	    // Configure the archive creation
-	    MavenArchiver archiver = new MavenArchiver();
-	    archiver.setArchiver( this.jarArchiver );
-	    archiver.setOutputFile( archiveFile );
+		// Configure the archive creation
+		MavenArchiver archiver = new MavenArchiver();
+		archiver.setArchiver( this.jarArchiver );
+		archiver.setOutputFile( archiveFile );
 
-	    // Add the application directories
+		// Add the application directories
 		try {
 			archiver.getArchiver().addDirectory( modelDir );
 
 			MavenArchiveConfiguration conf = new MavenArchiveConfiguration();
 			conf.setCompress( true );
 
-			archiver.createArchive(  this.session, this.project, conf );
+			archiver.createArchive( this.session, this.project, conf );
 			this.project.getArtifact().setFile( archiveFile );
 
-		} catch( ArchiverException e ) {
-			throw new MojoExecutionException( "Exception while packaging.", e );
-
-		} catch( IOException e ) {
-			throw new MojoExecutionException( "Exception while packaging.", e );
-
-		} catch( ManifestException e ) {
-			throw new MojoExecutionException( "Exception while packaging.", e );
-
-		} catch( DependencyResolutionRequiredException e ) {
+		} catch( Exception e ) {
 			throw new MojoExecutionException( "Exception while packaging.", e );
 		}
 	}

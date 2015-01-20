@@ -54,15 +54,15 @@ public class ValidateProjectMojoTest {
 	@Test( expected = MojoFailureException.class )
 	public void testInvalidStructure() throws Exception {
 
-		findMojo( "project--invalid", GOAL ).execute();;
+		findMojo( "project--invalid", GOAL ).execute();
 	}
 
 
 	@Test
 	public void testValidStructure() throws Exception {
 
-		findMojo( "project--invalid-app", GOAL ).execute();;
-		findMojo( "project--valid-with-warnings", GOAL ).execute();;
+		findMojo( "project--invalid-app", GOAL ).execute();
+		findMojo( "project--valid-with-warnings", GOAL ).execute();
 		findMojo( "project--valid", GOAL ).execute();
 	}
 
@@ -82,6 +82,7 @@ public class ValidateProjectMojoTest {
 		// Create the Maven project by hand (...)
 		final MavenProject mvnProject = new MavenProject() ;
         mvnProject.setFile( pom ) ;
+
         this.rule.setVariableValueToObject( mojo, "project", mvnProject );
 		Assert.assertNotNull( this.rule.getVariableValueFromObject( mojo, "project" ));
 

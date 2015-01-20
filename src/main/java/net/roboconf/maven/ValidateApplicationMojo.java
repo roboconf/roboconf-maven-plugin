@@ -106,7 +106,7 @@ public class ValidateApplicationMojo extends AbstractMojo {
 
 			if( error.getErrorCode().getLevel() == ErrorLevel.WARNING )
 				getLog().warn( sb.toString());
-			else if( error.getErrorCode().getLevel() == ErrorLevel.SEVERE )
+			else
 				getLog().error( sb.toString());
 
 			globalSb.append( sb );
