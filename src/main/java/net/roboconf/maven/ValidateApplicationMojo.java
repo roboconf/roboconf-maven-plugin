@@ -118,10 +118,7 @@ public class ValidateApplicationMojo extends AbstractMojo {
 		// Write the report.
 		// Reporting only makes sense when there is an error or a warning.
 		File targetFile = new File( this.project.getBasedir(), MavenPluginConstants.VALIDATION_RESULT_PATH );
-		if( ! targetFile.getParentFile().exists()
-				&& ! targetFile.getParentFile().mkdirs())
-			throw new IOException( "A directory could not be created: " + targetFile.getParentFile());
-
+		Utils.createDirectory( targetFile.getParentFile());
 		Utils.writeStringInto( globalSb.toString(), targetFile );
 	}
 }
