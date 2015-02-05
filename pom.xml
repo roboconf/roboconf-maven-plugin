@@ -25,10 +25,7 @@
    limitations under the License.
   -->
 
-<project 
-		xmlns="http://maven.apache.org/POM/4.0.0" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -39,7 +36,7 @@
 	
 	<groupId>net.roboconf</groupId>
 	<artifactId>roboconf-maven-plugin</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 	<name>Roboconf :: Maven Plug-in</name>
 	<packaging>maven-plugin</packaging>
 
@@ -88,7 +85,7 @@
 		<dependency>
 			<groupId>net.roboconf</groupId>
 			<artifactId>roboconf-core</artifactId>
-			<version>${project.version}</version>
+			<version>0.2</version>
 		</dependency>
 		
 		<dependency>
@@ -183,6 +180,7 @@
 		<connection>scm:git:git@github.com:roboconf/roboconf-maven-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:roboconf/roboconf-maven-plugin.git</developerConnection>
 		<url>git@github.com:roboconf/roboconf-maven-plugin.git</url>
-	</scm>
+	  <tag>roboconf-maven-plugin-0.2</tag>
+  </scm>
 	
 </project>
