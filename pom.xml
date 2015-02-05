@@ -36,7 +36,7 @@
 	
 	<groupId>net.roboconf</groupId>
 	<artifactId>roboconf-maven-plugin</artifactId>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 	<name>Roboconf :: Maven Plug-in</name>
 	<packaging>maven-plugin</packaging>
 
@@ -85,7 +85,7 @@
 		<dependency>
 			<groupId>net.roboconf</groupId>
 			<artifactId>roboconf-core</artifactId>
-			<version>0.2</version>
+			<version>0.3-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
@@ -180,7 +180,7 @@
 		<connection>scm:git:git@github.com:roboconf/roboconf-maven-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:roboconf/roboconf-maven-plugin.git</developerConnection>
 		<url>git@github.com:roboconf/roboconf-maven-plugin.git</url>
-	  <tag>roboconf-maven-plugin-0.2</tag>
+	  <tag>HEAD</tag>
   </scm>
 	
 </project>
